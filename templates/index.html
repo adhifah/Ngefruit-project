@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <title>NGEFRUIT — Ngefruit Dulu Biar Fresh!</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+
+  <body>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        let currentSlide = 0;
+        const slides = document.querySelectorAll(".slide");
+        function showSlide(index) {
+          slides.forEach((slide, i) => {
+            slide.classList.remove("active");
+            if (i === index) slide.classList.add("active");
+          });
+        }
+        setInterval(() => {
+          currentSlide = (currentSlide + 1) % slides.length;
+          showSlide(currentSlide);
+        }, 3500);
+      });
+    </script>
+
+    <nav class="navbar">
+      <div class="logo">
+        <a href="{{ url_for('home') }}" class="logo-link">
+          <img src="/static/images/logobrand.png" class="logo-img" />
+          NGEFRUIT
+        </a>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="#tentang">Tentang Kami</a></li>
+        <li><a href="#order">Order</a></li>
+      </ul>
+    </nav>
+
+    <section class="hero-section">
+      <div class="hero-slider">
+        <div
+          class="slide active"
+          style="background-image: url('/static/images/headersatu.png')"
+        ></div>
+        <div
+          class="slide"
+          style="background-image: url('/static/images/headerdua.png')"
+        ></div>
+        <div
+          class="slide"
+          style="background-image: url('/static/images/headertiga.png')"
+        ></div>
+      </div>
+    </section>
+
+    <section class="tentang-section" id="tentang">
+      <div class="tentang-content">
+        <div class="text-box">
+          <h2>Sehat<br />Gak<br />Harus<br />Ribet!</h2>
+        </div>
+
+        <img src="/static/images/halo.gif" class="gif-kanan" alt="GIF Buah" />
+      </div>
+    </section>
+
+    <section class="menu-preview">
+      <h2>Pilihan Menu yang Auto Healthy 😋</h2>
+
+      <div class="menu-grid">
+        <a href="/produk/buah-potong" class="menu-card">
+          <img src="/static/images/menu/buah-potong.png" />
+          <h3>Buah Potong</h3>
+          <p>Fresh, manis, no ribet.</p>
+          <span class="price">Rp15.000</span>
+        </a>
+
+        <a href="/produk/jus-buah" class="menu-card">
+          <span class="badge">BEST SELLER ⭐</span>
+          <img src="/static/images/menu/jus-buah.png" />
+          <h3>Jus Buah</h3>
+          <p>Seger dan auto moodbooster!</p>
+          <span class="price">Rp13.000</span>
+        </a>
+
+        <a href="/produk/sando" class="menu-card">
+          <span class="badge">BEST SELLER ⭐</span>
+          <img src="/static/images/menu/sando.png" />
+          <h3>Fruit Sandwich</h3>
+          <p>Kenyang tapi tetap sehat.</p>
+          <span class="price">Rp18.000</span>
+        </a>
+
+        <a href="/produk/salad-buah" class="menu-card">
+          <img src="/static/images/menu/salad-buah.png" />
+          <h3>Salad Buah</h3>
+          <p>Creamy, fresh, no guilt!</p>
+          <span class="price">Rp17.000</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="order-section" id="order">
+      <h2 class="order-title">Mau Order? Isi di sini ya bestie! 🫶</h2>
+
+      <div class="order-container">
+        <div class="cara-pesan">
+          <h3>Cara Pemesanan</h3>
+          <ol>
+            <li>Pilih menu yang kamu mau</li>
+            <li>Isi data diri pada form</li>
+            <li>Pilih metode pembayaran</li>
+            <li>Upload bukti transfer (jika memilih transfer)</li>
+            <li>Pesanan kamu akan dihubungi lewat WhatsApp</li>
+          </ol>
+          <p><b>Note:</b> Pesanan ≥ 5 pcs bisa diantar ya! 🚗✨</p>
+        </div>
+
+        <div class="order-card">
+          <form
+            action="/order"
+            method="POST"
+            class="order-form"
+            enctype="multipart/form-data"
+          >
+            <input type="date" name="tanggal" required />
+            <input type="text" name="nama" placeholder="Nama kamu" required />
+
+            <select name="produk" id="produkSelect" required>
+              <option value="">— Pilih Menu —</option>
+              <option value="buah-potong">Buah Potong</option>
+              <option value="jus-buah">Jus Buah</option>
+              <option value="sando">Fruit Sandwich</option>
+              <option value="salad-buah">Salad Buah</option>
+            </select>
+
+            <select name="gula" id="gulaSelect" style="display: none">
+              <option value="">— Pilih Kadar Gula —</option>
+              <option value="Normal">Normal</option>
+              <option value="Less Sugar">Less Sugar</option>
+            </select>
+
+            <select name="buah" id="buahSelect" style="display: none">
+              <option value="">— Pilih Buah —</option>
+              <option value="Mangga">Mangga</option>
+              <option value="Alpukat">Alpukat</option>
+              <option value="Naga">Buah Naga</option>
+              <option value="Melon">Melon</option>
+              <option value="Strawberry">Strawberry</option>
+            </select>
+
+            <input
+              type="number"
+              name="jumlah"
+              id="jumlahInput"
+              min="1"
+              placeholder="Jumlah pesanan"
+              required
+            />
+
+            <p id="infoDelivery" class="info-delivery"></p>
+
+            <select name="pembayaran" id="pembayaranSelect" required>
+              <option value="">— Pilih Pembayaran —</option>
+              <option value="Cash">Cash</option>
+              <option value="Transfer">Transfer (BRI: 1243469808369)</option>
+              <option value="QRIS">QRIS (Hubungi via WA)</option>
+            </select>
+
+            <div id="uploadBuktiBox" style="display: none; margin-top: 10px">
+              <label for="bukti">Upload Bukti Transfer:</label>
+              <input type="file" name="bukti" accept="image/*" />
+            </div>
+
+            <div
+              id="qrisDisplayBox"
+              style="
+                display: none;
+                margin-top: 20px;
+                text-align: center;
+                border: 1px solid #2ecc71;
+                padding: 15px;
+                border-radius: 8px;
+              "
+            >
+              <h4>Scan QRIS di Bawah Ini:</h4>
+              <img
+                src="/static/images/qris.jpeg"
+                alt="QRIS Payment Code"
+                style="max-width: 150px; margin: 10px auto; border-radius: 5px"
+              />
+              <p style="font-size: 0.9em; color: #006400; margin-top: 5px">
+                Setelah scan, jangan lupa upload bukti di kolom atas.
+              </p>
+            </div>
+
+            <p
+              id="totalHarga"
+              class="harga"
+              style="text-align: center; margin-top: 5px"
+            >
+              Total: Rp 0
+            </p>
+
+            <input
+              type="text"
+              name="nohp"
+              placeholder="No HP (yang bisa dihubungi)"
+              required
+            />
+            <textarea
+              name="catatan"
+              placeholder="Catatan (opsional)"
+            ></textarea>
+
+            <button type="submit" class="btn-submit">Order Sekarang</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <h3>Kontak</h3>
+      <div class="social-links">
+        <a href="https://wa.me/6285133796127">
+          <img src="/static/images/wa.png" alt="WhatsApp" />
+        </a>
+
+        <a
+          href="https://www.instagram.com/ngefruit.co?utm_source=qr&igsh=MXNrNGJzenltbm9ndw=="
+        >
+          <img src="/static/images/instagram.png" alt="Instagram" />
+        </a>
+      </div>
+
+      <p class="watermark">© 2025 NGEFRUIT — Ngefruit Dulu Biar Fresh!</p>
+    </footer>
+
+    <script>
+      const hargaProduk = {
+        "buah-potong": 15000,
+        "jus-buah": 13000,
+        sando: 18000,
+        "salad-buah": 17000,
+      };
+
+      const produkSelect = document.getElementById("produkSelect");
+      const gulaSelect = document.getElementById("gulaSelect");
+      const buahSelect = document.getElementById("buahSelect");
+      const jumlahInput = document.getElementById("jumlahInput");
+      const totalHarga = document.getElementById("totalHarga");
+      const infoDelivery = document.getElementById("infoDelivery");
+      const pembayaranSelect = document.getElementById("pembayaranSelect");
+      const uploadBuktiBox = document.getElementById("uploadBuktiBox");
+      // Ambil elemen QRIS Display Box
+      const qrisDisplayBox = document.getElementById("qrisDisplayBox");
+
+      produkSelect.addEventListener("change", hitungTotal);
+      jumlahInput.addEventListener("input", hitungTotal);
+
+      // LOGIKA PEMBAYARAN DIPERBARUI UNTUK QRIS
+      pembayaranSelect.addEventListener("change", () => {
+        const selectedPayment = pembayaranSelect.value;
+
+        // Aturan untuk menampilkan Kotak Upload Bukti (untuk Transfer dan QRIS)
+        uploadBuktiBox.style.display =
+          selectedPayment === "Transfer" || selectedPayment === "QRIS"
+            ? "block"
+            : "none";
+
+        // Aturan untuk menampilkan Gambar QRIS (hanya untuk QRIS)
+        qrisDisplayBox.style.display =
+          selectedPayment === "QRIS" ? "block" : "none";
+      });
+
+      function hitungTotal() {
+        const produk = produkSelect.value;
+        const jumlah = parseInt(jumlahInput.value) || 0;
+        const harga = hargaProduk[produk] || 0;
+        const total = harga * jumlah;
+        totalHarga.textContent = "Total: Rp " + total.toLocaleString("id-ID");
+        const isJus = produk === "jus-buah";
+        gulaSelect.style.display = isJus ? "block" : "none";
+        buahSelect.style.display = isJus ? "block" : "none";
+
+        if (jumlah >= 5) {
+          infoDelivery.textContent =
+            "🎉 Pesanan 5 pcs atau lebih bisa diantar!";
+        } else if (jumlah > 0) {
+          infoDelivery.textContent =
+            "🚗 Pesanan di bawah 5 pcs menggunakan COD.";
+        } else {
+          infoDelivery.textContent = "";
+        }
+      }
+      function toggleMenu() {
+        const navLinks = document.querySelector(".nav-links");
+        navLinks.classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>

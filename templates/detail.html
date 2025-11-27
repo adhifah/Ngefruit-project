@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ item.nama }} — NGEFRUIT</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="logo">
+        <a href="{{ url_for('home') }}" class="logo-link">
+          <img src="/static/images/logobrand.png" class="logo-img" />
+          NGEFRUIT
+        </a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/produk">Menu</a></li>
+        <li><a href="/#order">Order</a></li>
+      </ul>
+    </nav>
+
+    <!-- DETAIL HEADER (REVISED WITH CARD + DYNAMIC DESCRIPTION) -->
+    <section class="menu-detail-header">
+      <div class="detail-header-card">
+        <div class="detail-header-left">
+          <h1>{{ item.nama }}</h1>
+
+          {% if item.deskripsi %}
+          <p class="detail-desc">{{ item.deskripsi }}</p>
+          {% else %}
+          <p class="detail-desc">
+            Minuman segar dengan kualitas terbaik menggunakan buah pilihan.
+          </p>
+          {% endif %}
+          <p class="detail-price">Harga: Rp {{ item.harga }}</p>
+        </div>
+
+        <div class="detail-header-right">
+          <img src="/static/images/menu/{{ item.gambar }}" class="detail-img" />
+        </div>
+      </div>
+    </section>
+
+    <!-- DETAIL CARDS -->
+    <section class="detail-section">
+      <div class="detail-grid">
+        <!-- INGREDIENTS -->
+        <div class="detail-card">
+          <h3>Ingredients 🥗</h3>
+          <ul>
+            {% for ing in item.ingredients.split(',') %}
+            <li>{{ ing.strip() }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <!-- GIZI -->
+        <div class="detail-card">
+          <h3>Kandungan Gizi 🍎</h3>
+          <ul>
+            {% for ing in item.kandungangizi.split(',') %}
+            <li>{{ ing.strip() }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <!-- MANFAAT -->
+        <div class="detail-card">
+          <h3>Manfaat ✨</h3>
+          <ul>
+            {% for ing in item.manfaat.split(',') %}
+            <li>{{ ing.strip() }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <a href="/#order" class="btn-detail-order">Pesan Sekarang</a>
+    </section>
+  </body>
+</html>
