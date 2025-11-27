@@ -19,7 +19,11 @@ scope = [
 ]
 
 google_creds_json = os.environ.get("GOOGLE_CREDENTIALS")
-google_creds_dict = json.loads(google_creds_json)
+if isinstance(google_creds_json, str):
+    google_creds_dict = json.loads(google_creds_json)
+else:
+    google_creds_dict = google_creds_json
+
 
 creds = ServiceAccountCredentials.from_json_keyfile_dict(
     google_creds_dict,
@@ -166,4 +170,4 @@ def order():
 def order_get():
     return redirect("/")
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
